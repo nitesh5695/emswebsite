@@ -1,0 +1,137 @@
+<html>
+
+  <head>
+    <title>Add employer</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  </head>
+  <body>
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Department</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active"></li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          
+            
+              <!-- general form elements disabled -->
+              <div class="card card-warning">
+                <div class="card-header">
+                  <h3 class="card-title">Add department</h3>
+                </div>
+                <div id="message" style="color:red"> </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                   <div class="row"> 
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Department</label>
+                          <select id="department" class="form-control" >
+                            
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Selected Departments</label>
+                          <textarea id="selected_departments" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        
+                           
+                         <button id="add" class="btn btn-primary">Add</button>
+                        
+                      </div>
+                    </div>
+                     
+                  </div>
+                <!-- /.card-body -->
+              </div>
+              <div class="card card-secondary">
+                <div class="card-header">
+                  <h3 class="card-title">My Departments </h3>
+                </div>
+               
+                <!-- /.card-header -->
+                <div class="card-body">
+                   <div class="row"> 
+                  
+                    <div class="card-body table-responsive p-0">
+                      <table class="table table-hover text-nowrap">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Department Name</th>
+                            <th>Option</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody id="table">
+                        
+                         
+                          
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                     
+                      
+                    </div>
+                     
+                  </div>
+                <!-- /.card-body -->
+              </div>
+              <div class="card card-secondary">
+                <div class="card-header">
+                  <h3 class="card-title">Request to add department </h3>
+                </div>
+                <div id="message" style="color:red">if your department is not found then you can make request to add a department in the list </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                   <div class="row"> 
+                  
+                        <div class="col-sm-6">
+                            <!-- text input -->
+                            <div class="form-group">
+                              <label>Department Name</label>
+                              <input id="department_name" type="text" class="form-control" placeholder="Enter ..." required>
+                            </div>
+                            
+                          </div>
+                     
+                      <div class="col-sm-6">
+                        
+                           
+                         <button id="requestbutton" class="btn btn-primary">Make Request</button>
+                        
+                      </div>
+                    </div>
+                     
+                  </div>
+                <!-- /.card-body -->
+              </div>
+              
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content -->
+</div>
+</div>
+<script src="js/add_department.js"></script>
+</body>
+</html>

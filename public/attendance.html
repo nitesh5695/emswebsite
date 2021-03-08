@@ -1,0 +1,96 @@
+<html>
+
+  <head>
+    <title>Attendance|EMS</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  </head>
+  <body>
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Projects</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active"></li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          
+            
+              <!-- general form elements disabled -->
+              <div class="card card-warning">
+                <div class="card-header">
+                  <h3 class="card-title">Attendance</h3>
+                </div>
+                <div id="message" style="color:red"> </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="col-lg-12">
+                     <div class="row">
+                       <div class="col-12">
+                         <div class="card">
+                           <div class="card-header">
+                             <h3 class="card-title">Take Attendance</h3>
+                             
+                             <div class="card-tools">
+                               <div class="input-group input-group-sm" style="width: 150px;">
+                                
+                                 <!-- <div> <input id="date" type="date" required></div> -->
+                                 
+                               </div>
+                             </div>
+                           </div>
+                           <!-- /.card-header -->
+                           <div class="card-body table-responsive p-0">
+                               <form>
+                                <div> <input id="date" type="date" required></div>
+                             <table class="table table-hover text-nowrap">
+                               <thead>
+                                 <tr>
+                                   <th>ID</th>
+                                   <th>Name</th>
+                                   <th>Status</th>
+                                   
+                                 </tr>
+                               </thead>
+                               <tbody id="table">
+                                 
+                                  
+                               </tbody>
+                             </table>
+                           
+                           </div>
+                          
+                          </form>
+                           <!-- /.card-body -->
+                         </div>
+                         <!-- /.card -->
+                       </div>
+                     </div>
+                    </div>
+                    <button  class="btn btn-primary" id="submit" >Submit</button>
+                   </div>
+                <!-- /.card-body -->
+              </div>
+             
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content -->
+</div>
+</div>
+<script src="js/attendance.js"></script>
+</body>
+</html>

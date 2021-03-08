@@ -1,0 +1,51 @@
+try{
+	user=localStorage.getItem('E_user')
+}
+catch (errr){
+	location.href="login.html"
+}
+async function data(){
+    
+    const data= { method:'GET',
+                    
+      
+     
+         headers:{
+           'Content-Type':'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem("user_token")
+           
+         },
+           
+         }
+       
+        const res= await  fetch('https://smilebotems.herokuapp.com/dashboard/',data)
+         .then((res)=> {
+              
+           console.log(res.statusText)
+           if(res.statusText=="Forbidden")
+           {
+            location.href='login.html' 
+           }
+           if (!res.ok){
+            throw Error(res.statusText)
+          }
+           return res.json()
+           }).then((data)=> {
+               console.log(data);
+              document.getElementById('employers').innerHTML=data.total_employer;
+              document.getElementById('projects').innerHTML=data.total_projects;
+              
+              document.getElementById('running').innerHTML=data.running_projects;
+              document.getElementById('completed').innerHTML=data.completed_projects;  
+              
+            
+           }).catch((e)=>{
+              {
+                 console.log(e) 
+                
+              }
+           });
+    
+    
+        }
+data()        

@@ -1,0 +1,72 @@
+<html>
+
+  <head>
+    <title>view profile</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  </head>
+  <body>
+<div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Profile</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active"></li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="content">
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+    <div class="card card-primary card-outline">
+        <div class="card-body box-profile">
+          <div class="text-center">
+            <img class="profile-user-img img-fluid img-circle"
+                 src="../../dist/img/user4-128x128.jpg"
+                 alt="User profile picture">
+          </div>
+
+          <h3 id="head" class="profile-username text-center"></h3>
+
+          <p  class="text-muted text-center">Since<span  id="establish"></span> </p>
+
+          <ul class="list-group list-group-unbordered mb-3">
+            <li class="list-group-item">
+              <b>Address</b> <a id="address" class="float-right">kljnljkhn</a>
+            </li>
+            <li class="list-group-item">
+              <b>Contact_no</b> <a id="contact" class="float-right">543</a>
+            </li>
+            <li class="list-group-item">
+              <b>Company email</b> <a id="email" class="float-right">13,287</a>
+            </li>
+            <li class="list-group-item">
+              <b>CEO</b> <a id="ceo" class="float-right">hijsidfbi</a>
+            </li>
+            <li class="list-group-item">
+              <b>GST No.</b> <a id="gst" class="float-right">hijsidfbi</a>
+            </li>
+          </ul>
+
+          
+        </div>
+        <button class="btn btn-primary" id="edit_button" onclick="window.location.href='editcompanyprofile.html'">Edit Profile</button>
+    </div>
+          </div>
+        </div>
+        
+        <!-- /.card-body -->
+      </div>
+</div>
+<script src="js/companyprofileview.js"></script>
+</body>
+</html>

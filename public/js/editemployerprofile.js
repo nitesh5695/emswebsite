@@ -1,0 +1,241 @@
+try{
+	user=localStorage.getItem('C_user')
+}
+catch (errr){
+	location.href="login.html";
+}
+emp_id=localStorage.getItem('emp_id')
+document.getElementById('submit').addEventListener('click',update)
+async function getdata(){
+   project= document.getElementById('project').value
+   department= document.getElementById('department').value
+const data= { method:'GET',
+     headers:{
+       'Content-Type':'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem("user_token")
+       
+     },
+     }
+    const res= await  fetch('https://smilebotems.herokuapp.com/departments/',data)
+     .then((res)=> {
+
+        console.log(res)
+       if(res.statusText=="Forbidden")
+       {
+        location.href="login.html";
+       }
+       if (!res.ok){
+        throw Error(res.statusText)
+      }
+       return res.json()
+       }).then((data)=> {
+
+         var select=document.getElementById('department')
+         data.forEach(element => {
+            console.log(element.department_name)
+            var option = document.createElement("option");
+               option.text =element.department_name
+               select.add(option)       
+         });
+           console.log(data);
+           
+       }).catch((e)=>{
+          {
+             console.log(e) 
+             document.getElementById('message').innerHTML="something error";
+          }
+       });
+      }
+
+getdata()         
+
+async function getprojects(){
+project= document.getElementById('project').value
+department= document.getElementById('department').value
+const pdata= { method:'GET',
+     headers:{
+       'Content-Type':'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem("user_token")
+       
+     },
+     }
+
+ const res= await  fetch('https://smilebotems.herokuapp.com/projects/',pdata)
+  .then((res)=> {
+
+     console.log(res)
+    if(res.statusText=="Forbidden")
+    {
+     console.log('token expired') 
+    }
+    if (!res.ok){
+     throw Error(res.statusText)
+   }
+    return res.json()
+    }).then((data)=> {
+
+      var select=document.getElementById('project')
+      data.forEach(element => {
+         console.log(element.department_name)
+         var option = document.createElement("option");
+            option.text =element.title
+            select.add(option)       
+      });
+        console.log(data);
+        
+    }).catch((e)=>{
+       {
+          console.log(e) 
+          document.getElementById('message').innerHTML="something error";
+       }
+    });
+   }
+   getprojects()
+
+
+async function setdata(){
+    
+    const data= { method:'GET',
+                    
+      
+     
+         headers:{
+           'Content-Type':'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem("user_token")
+           
+         },
+           
+         }
+       
+        const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/'+emp_id+'/',data)
+         .then((res)=> {
+              
+           console.log(res.statusText)
+           if(res.statusText=="Forbidden")
+           {
+            document.getElementById("message").innerHTML="username or password is wrong"; 
+           }
+           if (!res.ok){
+            throw Error(res.statusText)
+          }
+           return res.json()
+           }).then((data)=> {
+               console.log(data);
+               document.getElementById('email').value=data.email;
+               document.getElementById('fullname').value=data.name;
+               
+           }).catch((e)=>{
+              {
+                 console.log(e) 
+                
+              }
+           });
+
+    
+    const data1= { method:'GET',
+                    
+      
+     
+         headers:{
+           'Content-Type':'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem("user_token")
+           
+         },
+        
+         }
+       
+        const resprofile= await  fetch('https://smilebotems.herokuapp.com/employer_profile/'+emp_id+'/',data1)
+         .then((resprofile)=> {
+
+            console.log(resprofile)
+           if(resprofile.statusText=="Forbidden")
+           {
+            location.href="login.html"
+           }
+           if (!resprofile.ok){
+            throw Error(resprofile.statusText)
+          }
+           return resprofile.json()
+           }).then((data)=> {
+             
+             document.getElementById('password').value=data.password
+            
+           
+            document.getElementById('address').value=data.address
+            document.getElementById('contact_no').value=data.mobile_no
+            document.getElementById('job_type').value="NA"
+            document.getElementById('dob').value=data.dob
+            document.getElementById('joining_date').value=data.joining_date
+            document.getElementById('project').value=data.project_id
+            document.getElementById('gender').value=data.gender
+            document.getElementById('department').value =data.department_id           
+               console.log(data);
+               
+           }).catch((e)=>{
+              {
+                 console.log(e) 
+                
+              }
+           });
+    
+    
+        }
+       setdata()
+
+
+
+async function update(){
+   
+    email= document.getElementById('email').value
+    password= document.getElementById('password').value
+    confirmpassword= document.getElementById('confirmpassword').value
+    fullname=document.getElementById('fullname').value
+    address= document.getElementById('address').value
+    contact_no= document.getElementById('contact_no').value
+    gender=document.getElementById('gender').value
+    jobtype= document.getElementById('job_type').value
+    dob= document.getElementById('dob').value
+    joining_date= document.getElementById('joining_date').value
+    //project= 2//document.getElementById('project').value
+    //department= 1//document.getElementById('department').value
+    
+
+    
+
+    const postdata= { method:'PATCH',
+                    
+      
+     
+         headers:{
+           'Content-Type':'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem("user_token")
+           
+         },
+         body:JSON.stringify({emp_id:emp_id,gender:gender,address:address,mobile_no:contact_no,dob:dob,joining_date:joining_date,project_id:project,department_id:department})
+            
+         }
+       
+        const res= await  fetch('https://smilebotems.herokuapp.com/employer_profile/'+emp_id+'/',postdata)
+         .then((res)=> {
+
+            console.log(res)
+           if(res.statusText=="Forbidden")
+           {
+            console.log('token expired') 
+           }
+           if (!res.ok){
+            throw Error(res.statusText)
+          }
+           return res.json()
+           }).then((data)=> {
+               document.getElementById('message').innerHTML=data.message;
+               console.log(data);
+               
+           }).catch((e)=>{
+              {
+                 console.log(e) 
+                 document.getElementById('message').innerHTML="something error";
+              }
+           });
+
+}
