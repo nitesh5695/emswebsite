@@ -108,8 +108,6 @@ async function add_department(){
                  <td>${element.id}</td>
                  <td>${element.dept_id}</td>
                  <td><button class="btn btn-danger" onclick="Delete(${element.id})">Delete</button>
-                   
-
                </tr>`    
              });
                console.log(data);
@@ -125,14 +123,14 @@ async function add_department(){
 
    function Delete(id){
 
-const data= { method:'DELETE',
+const deldata= { method:'DELETE',
          headers:{
            'Content-Type':'application/json',
             Authorization: 'Bearer ' + localStorage.getItem("user_token")
            
          },
          }
-        const res= fetch('https://smilebotems.herokuapp.com/add_department/'+id+'/',data)
+        const res= fetch('https://smilebotems.herokuapp.com/add_department/'+id+'/',deldata)
          .then((res)=> {
            if (!res.ok){
             throw Error(res.statusText)

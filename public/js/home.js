@@ -58,6 +58,7 @@ var manageleaves=document.getElementById("manageleaves")
 var add_department=document.getElementById("add_department")
 var manage_salary=document.getElementById("manage_salary")
 var attendance=document.getElementById("attendance")
+var performance=document.getElementById("performance")
 
 profilebutton.addEventListener("click",link1)
 addemployer.addEventListener("click",link5)
@@ -69,6 +70,7 @@ add_department.addEventListener("click",link7)
 manage_salary.addEventListener("click",link8)
 view_projects.addEventListener('click',link9)
 attendance.addEventListener('click',link10)
+performance.addEventListener('click',link11)
 if(localStorage.getItem('src'))
 {
 	frame.src=localStorage.getItem('src')
@@ -121,6 +123,11 @@ function link8(){
 	frame.src="attendance.html"
 	localStorage.setItem('src',frame.src)
   }    
+   
+  function link10(){
+	frame.src="performance.html"
+	localStorage.setItem('src',frame.src)
+  }   
   function logout(){
 	localStorage.clear();
 	location.href="login.html";
