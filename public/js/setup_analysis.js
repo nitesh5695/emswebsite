@@ -3,6 +3,7 @@ document.getElementById('remove').addEventListener('click',Remove);
 document.getElementById('Submit').addEventListener('click',Submit_data);
 var count=2;
 var divQ=document.getElementById('questions')
+myquestions()
 function add_more(){
 //    divQ.innerHTML+=` <div id="questions" class="col-sm-6">
 //    <div class="form-group">
@@ -42,14 +43,14 @@ function Remove()
 
 async function Submit_data()
  {
-     myquestions()
+     
   var q_arr=[]
  var phase=document.getElementById("title").value
    var all= document.getElementsByName("question")
     for(x=0;x<count-1;x++)
 {
         data={
-            "phase_id":1,
+            "phase_id":21,
             "question":all[x].value
         }
         q_arr.push(data)
@@ -139,7 +140,6 @@ async function myquestions(){
              }
             await fetch('http://127.0.0.1:7002/phases/'+id+'/',data)
              .then((res)=> {
-               console.log(res)
                if (!res.ok){
                 throw Error(res.statusText)
               }
