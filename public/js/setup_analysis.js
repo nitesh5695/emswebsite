@@ -1,8 +1,11 @@
 document.getElementById('Add').addEventListener('click',add_more);
 document.getElementById('remove').addEventListener('click',Remove);
 document.getElementById('Submit').addEventListener('click',Submit_data);
+document.getElementById('add_choice').addEventListener('click',add_choice);
 var count=2;
 var divQ=document.getElementById('questions')
+var cmp_id=localStorage.getItem('C_user')
+console.log(cmp_id)
 myquestions()
 function add_more(){
 //    divQ.innerHTML+=` <div id="questions" class="col-sm-6">
@@ -65,7 +68,7 @@ async function Submit_data()
       Authorization: 'Bearer ' + localStorage.getItem("user_token")
       
     },
-      body:JSON.stringify({"company_id":1,"phase_name":phase,"questions":q_arr})
+      body:JSON.stringify({"company_id":cmp_id,"phase_name":phase,"questions":q_arr})
     }
   
   await  fetch('http://127.0.0.1:7002/phases/',data1)
@@ -113,6 +116,7 @@ async function myquestions(){
                  <td>${element.phase_name}</td>
                  <td id=${element.phase_id}></td>
                  <td><button class="btn btn-danger" onclick="Delete(${element.phase_id})">Delete</button>
+                 <button class="btn btn-danger" onclick="Edit(${element.phase_id})">Edit</button>
                </tr>`
                element.questions.forEach(ques=>{
                 td=document.getElementById(element.phase_id)
@@ -157,3 +161,104 @@ async function myquestions(){
                myquestions()
               
        }
+  async function add_choice(){
+   var choice=document.getElementById('option_name').value
+   var marks=document.getElementById('mark').value
+    const choice_data1= { method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem("user_token")
+      
+    },
+      body:JSON.stringify({"company_id":cmp_id,"choice_name":choice,"marks":marks})
+    }
+  await  fetch('http://127.0.0.1:7002/choices/',choice_data1)
+    .then((response)=> {
+          if (!response.ok){
+            console.log(response.json())
+        throw Error(response.statusText)
+      }
+      return response.json()
+      }).then((data)=> {
+      document.getElementById("message").innerHTML=data.message;
+          console.log(data);
+      }).catch((e)=>{
+          console.log(e);
+      });
+  }     
+
+  async function myoptions(){
+    
+    const getdata= { method:'GET',
+         headers:{
+           'Content-Type':'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem("user_token")
+           
+         },
+         }
+         await  fetch('http://127.0.0.1:7002/choices/',getdata)
+         .then((res)=> {
+   
+            console.log(res)
+           if(res.statusText=="Forbidden")
+           {
+            console.log('token expired') 
+           }
+           if (!res.ok){
+            throw Error(res.statusText)
+          }
+           return res.json()
+           }).then((data)=> {
+   
+            div=document.getElementById('option_table')
+             data.forEach(element => {
+                 div.innerHTML+=` <tr>
+                 <td>${element.choice_name}</td>
+                 <td id=${element.marks}>${element.marks}</td>
+                 <td><button class="btn btn-danger" onclick="Deletechoice(${element.choice_id})">Delete</button>
+               </tr>`
+             
+             });
+               
+           }).catch((e)=>{
+              
+                 console.log(e) 
+                 
+              
+           });
+          }
+myoptions()
+async function Deletechoice(id){
+
+  const data= { method:'DELETE',
+           headers:{
+             'Content-Type':'application/json',
+              Authorization: 'Bearer ' + localStorage.getItem("user_token")
+             
+           },
+           }
+          await fetch('http://127.0.0.1:7002/choices/'+id+'/',data)
+           .then((res)=> {
+             if (!res.ok){
+              throw Error(res.statusText)
+            }
+             return res.json()
+             }).then((data)=> {
+                 console.log(data);
+                 document.getElementById('message').innerHTML=data.message;
+                 
+             }).catch((e)=>{
+                {
+                   console.log(e) 
+                   document.getElementById('message').innerHTML="something error";
+                }
+             });
+             myquestions()
+            
+    }
+     
+
+  function Edit(id){
+    localStorage.setItem('phase_id',id)
+    location.href="edit_question.html"
+  }

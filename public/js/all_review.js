@@ -58,11 +58,11 @@ async function employersdata(){
                       
                     </div>
                         <div >
-                        <button id=${element.emp_id} class="btn btn-sm btn-primary text-left" onclick="employee_reviews(${element.emp_id})">
+                        <button id=${element.emp_id} class="btn btn-sm btn-primary text-left" onclick="employee_reviews(${element.emp_id},'${element.name}')">
                         <i class="fas fa-user"></i> Past Reviews
                       </button>
                           
-                          <button id=${element.emp_id} class="btn btn-sm btn-primary" onclick="getid(${element.emp_id})">
+                          <button id=${element.emp_id} class="btn btn-sm btn-primary" onclick="getid(${element.emp_id},'${element.name}')">
                             <i class="fas fa-user"></i> Give Review
                           </button>
                         </div>
@@ -82,12 +82,14 @@ async function employersdata(){
     
         }
     employersdata()  
-    function getid(emp_id){
+    function getid(emp_id,name){
         localStorage.setItem("emp_id",emp_id)
+        localStorage.setItem("emp_name",name)
         location.href='review.html'
     }  
-    function employee_reviews(emp_id){
+    function employee_reviews(emp_id,name){
         localStorage.setItem("emp_id",emp_id)
+        localStorage.setItem("emp_name",name)
         location.href='employee_review.html'
     }  
 
@@ -145,11 +147,18 @@ async function employersdata(){
                    </div>
                    <div class="card-footer">
                      <div class="text-right">
+                     </div>
                        
-                       <button id=${element.emp_id} class="btn btn-sm btn-primary" onclick="getid(${element.emp_id})">
-                         <i class="fas fa-user"></i> View Profile
+                     <div >
+                     <button id=${element.emp_id} class="btn btn-sm btn-primary text-left" onclick="employee_reviews(${element.emp_id},'${element.name}')">
+                     <i class="fas fa-user"></i> Past Reviews
+                   </button>
+                       
+                       <button id=${element.emp_id} class="btn btn-sm btn-primary" onclick="getid(${element.emp_id},'${element.name}')">
+                         <i class="fas fa-user"></i> Give Review
                        </button>
                      </div>
+                     
                    </div>
                  </div>
                </div>

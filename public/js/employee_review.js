@@ -1,14 +1,20 @@
 var allques=[];
+var f_month;
+var year;
 const monthNames = ["null","January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 var d=new Date;
 var emp_id=localStorage.getItem('emp_id')
 var current_month=(d.getMonth()+1)
+var current_year=(d.getFullYear())
+var selected_week="week1"
+f_month=current_month
+year=current_year
+document.getElementById('emp_name').innerHTML=localStorage.getItem('emp_name')
 async function myquestions(){
  
-  console.log(current_month)
-  document.getElementById("month").innerHTML=monthNames[current_month]
+  document.getElementById("month").innerHTML=monthNames[f_month]
     
     const getdata= { method:'GET',
          headers:{
@@ -31,27 +37,92 @@ async function myquestions(){
            return res.json()
            }).then((data)=> {
    
-            div=document.getElementById('table')
+            div=document.getElementById('expandable')
+            console.log(div)
+            
              data.forEach(element => {
-                 div.innerHTML+=` <tr>
-                 <td>${element.phase_name}</td>
-                 <td id=${element.phase_name}></td>
-                 <td id=${element.phase_id}></td>
-                 <td class=${element.phase_id}></td>
-               </tr>`
+
+              div.innerHTML+=`
+             
+    <div class="card-header" id="headingOne">
+    <h3><b>${element.phase_name}</b></h3>
+       <div class="card" id="phase${element.phase_id}">
+  
+   </div>
+
+  
+ </div>
+
+              `
+               
                element.questions.forEach(ques=>{
                 count=1
-                td=document.getElementById(element.phase_name)
-                td.innerHTML+=ques.question +"<br>" 
-                  count+=1            
+                td=document.getElementById("phase"+element.phase_id)
+                td.innerHTML+=`  <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#ques${ques.question_id}" aria-expanded="false" aria-controls="collapseTwo">
+                    ${ques.question}
+                  </button>
+                </h5>
+              </div>
+              <div id="ques${ques.question_id}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                   <div class="row">
+                       <h5 id="${ques.question_id}">Exceptional</h4>    
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p><b>Reviewed By</b></p>
+                            
+                              </div>
+                              <div class="col-sm-6">
+                                <p id="by${ques.question_id}">Nitesh singh</p>
+                              </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p><b>comment</b></p>
+                            
+                              </div>
+                              <div class="col-sm-6">
+                                <p id="comment${ques.question_id}"></p>
+                              </div>
+           
+                  </div>
+                  <div class="row">
+                  <div class="col-sm-6">
+                      <p><b>Rating</b></p>
+                      
+                        </div>
+                        <div class="col-sm-6">
+                          <p id="mark${ques.question_id}"></p>
+                        </div>
+     
+            </div>
+                   <div class="row">
+                        <div class="col-sm-6">
+                            <button onclick="update_review()" class="btn btn-danger">Edit</button>
+                              </div>
+                             
+           
+                  </div>
+              </div>
+            </div>
+               
+                `
+                
+                   
+                  data={
+                    "count":count,
+                    "question_id":ques.question_id
+    
+                  } 
+                 
+                  allques.push(data)   
+                  count+=1       
                })    
-               data={
-                "count":count,
-                "phase_id":element.phase_id
-
-              } 
-              allques.push(data)
-             });
+              
+              });
                
            }).catch((e)=>{
               
@@ -59,12 +130,12 @@ async function myquestions(){
                  document.getElementById('message').innerHTML="something error";
               
            });
-           getweek1("03","week1")
+           getweek1(year,f_month,"week1")
           }
 
           myquestions()
 
-async function getweek1(month,week){
+async function getweek1(year,month,week){
   const getdata= { method:'GET',
   headers:{
     'Content-Type':'application/json',
@@ -72,7 +143,7 @@ async function getweek1(month,week){
     
   },
   }
-  await  fetch('http://127.0.0.1:7002/check/'+month+'/'+week+'/'+emp_id+'/',getdata)
+  await  fetch('http://127.0.0.1:7002/get_review/'+year+'/'+month+'/'+week+'/'+emp_id+'/',getdata)
   .then((res)=> {
 
      console.log(res)
@@ -89,7 +160,7 @@ async function getweek1(month,week){
       {
         allques.forEach(element => {
         
-          td=document.getElementById(element.phase_id)
+          td=document.getElementById(element.question_id)
           td.innerHTML="<h6 style='color:red'>No review</h6>"           
          });   
       }else{
@@ -97,75 +168,56 @@ async function getweek1(month,week){
      
 
    
-      allques.forEach(element => {
+      data.forEach(element => {
+        console.log(element)
         
-         td=document.getElementById(element.phase_id)
-         com_td=document.getElementsByClassName(element.phase_id)
-         td.innerHTML=null
-         com_td.innerHTML=null
-         for(x=1;x<element.count+1;x++)
-         {
-          
-          td.innerHTML+= data[row_counter].review+"<br>"
-          com_td.innerHTML+=data[row_counter].comment+'<br>' 
-          row_counter+=1
-         }              
+         td=document.getElementById(element.questions_id)
+         com_td=document.getElementById("comment"+element.questions_id)
+         by=document.getElementById("by"+element.questions_id)
+         rating=document.getElementById("mark"+element.questions_id)
+         td.innerHTML=element.review
+         com_td.innerHTML=element.comment
+         by.innerHTML=element.reviewed_by
+         rating.innerHTML=element.marks
+            
         });       
-    }}).catch((e)=>{
+  }  }).catch((e)=>{
         console.log(e) 
          document.getElementById('message').innerHTML="something error";
        });
    }
-
-   function getdate(id){
-    
-  //  document.getElementById(id).innerHTML="selected";
   
-   document.getElementById(id).style.backgroundColor="green";
-   if ( document.getElementById(id).value=="selected")
-   {
-     
-   }else{
-    getweek1("03",id) 
-    document.getElementById(id).value="selected";
-
-   }
-   if (document.getElementById(id).value=="selected" && id=="week1")
-   {
-    document.getElementById("week2").style.backgroundColor="red";
-    document.getElementById("week3").style.backgroundColor="red";
-    document.getElementById("week4").style.backgroundColor="red";
-    document.getElementById("week2").value="unselected";
-    document.getElementById("week3").value="unselected";
-    document.getElementById("week4").value="unselected";
-   }
-   if (document.getElementById(id).value=="selected" && id=="week2")
-   {
-    document.getElementById("week1").style.backgroundColor="red";
-    document.getElementById("week3").style.backgroundColor="red";
-    document.getElementById("week4").style.backgroundColor="red";
-    document.getElementById("week1").value="unselected";
-    document.getElementById("week3").value="unselected";
-    document.getElementById("week4").value="unselected";
-   }
-   if (document.getElementById(id).value=="selected" && id=="week3")
-   {
-    document.getElementById("week2").style.backgroundColor="red";
-    document.getElementById("week1").style.backgroundColor="red";
-    document.getElementById("week4").style.backgroundColor="red";
-    document.getElementById("week2").value="unselected";
-    document.getElementById("week1").value="unselected";
-    document.getElementById("week4").value="unselected";
-   }
-   if (document.getElementById(id).value=="selected" && id=="week4")
-   {
-    document.getElementById("week2").style.backgroundColor="red";
-    document.getElementById("week3").style.backgroundColor="red";
-    document.getElementById("week1").style.backgroundColor="red";
-    document.getElementById("week2").value="unselected";
-    document.getElementById("week3").value="unselected";
-    document.getElementById("week1").value="unselected";
-   }
-   document.getElementById("week").innerHTML=id
+   function getdate(id){
+     selected_week=id
+    getweek1(year,f_month,id) 
+  
  }
- 
+
+ document.getElementById('month_button').addEventListener('click',by_month)
+ function by_month(){
+   month=document.getElementById('select_month').value
+   document.getElementById("month").innerHTML=monthNames[f_month]
+   var only_month=month.split("-")
+  
+   f_month=only_month[1]
+   year=only_month[0]
+   getweek1(year,f_month,"week1")
+   console.log(year,f_month)
+   if (f_month==01){f_month=1}
+   if (f_month==02){f_month=2}
+   if (f_month==03){f_month=3}
+   if (f_month==04){f_month=4}
+   if (f_month==05){f_month=5}
+   if (f_month==06){f_month=6}
+   if (f_month==07){f_month=7}
+   if (f_month==08){f_month=8}
+   if (f_month==09){f_month=9}
+   document.getElementById("month").innerHTML=monthNames[f_month]
+ }
+  //document.getElementById("edit_review").addEventListener('click',update_review)
+ function update_review(){
+   localStorage.setItem('r_year',year)
+   localStorage.setItem('r_month',f_month)
+   localStorage.setItem('r_week',selected_week)
+   location.href="edit_review.html"
+ }

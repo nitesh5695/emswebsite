@@ -1,12 +1,13 @@
 document.getElementById('submit').addEventListener('click',submit_data)
 var week=[]
 var all_phases;
+var choice_data;
 var weekdate;
 var emp_id=localStorage.getItem("emp_id")
 var company_id=localStorage.getItem("C_user")
 
 async function getQuestions()
-{
+{ getoptions()
     const getdata= { method:'GET',
          headers:{
            'Content-Type':'application/json',
@@ -54,10 +55,7 @@ async function getQuestions()
                  
                   <div class="select2-purple">
                     <select id=${ques.question_id} class="select2" placeholder="select one" data-dropdown-css-class="select2-purple" style="width: 50%;">
-                      <option>Exceptional</option>
-                      <option>Meet Requirements</option>
-                      <option>Gets By</option>
-                      <option>Needs Improvement</option>
+                      
                     </select>
                   </div>
                   
@@ -66,7 +64,12 @@ async function getQuestions()
                 <!-- /.form-group -->
               </div>
                   </div>
-                    `                  
+                    `   
+                    choice_data.forEach(elem=>{
+                      body=document.getElementById(ques.question_id)
+                      body.innerHTML+=`<option value=${elem.choice_name}>${elem.choice_name}</option>`
+
+                    })               
                    }) 
 
                 
@@ -173,6 +176,7 @@ if (w4<d.getDate()){
 div=document.getElementById("week_row")
 var count=1
 week.forEach(w=>{
+  
 div.innerHTML+=`
 <div class="col-sm-3 my-2">
 <button class='btn btn-danger' onclick='getdate("${w}")' id="${w}">Week${count}</button> 
@@ -189,4 +193,32 @@ function getdate(id){
    console.log(weekdate)
   document.getElementById(id).innerHTML="selected";
   document.getElementById(id).style.backgroundColor="green";
+}
+async function getoptions(){
+  const getdata= { method:'GET',
+         headers:{
+           'Content-Type':'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem("user_token")
+            },}
+         await  fetch('http://127.0.0.1:7002/choices/',getdata)
+         .then((res)=> {
+            console.log(res)
+           if(res.statusText=="Forbidden")
+           {
+            console.log('token expired') 
+           }
+           if (!res.ok){
+            throw Error(res.statusText)
+          }
+           return res.json()
+           }).then((data)=> {
+             choice_data=data
+             console.log(data)
+
+           }).catch((e)=>{
+              
+                 console.log(e) 
+                //  document.getElementById('message').innerHTML="something error";
+              
+           });
 }
