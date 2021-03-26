@@ -110,11 +110,24 @@ async function employersdata(){
           fetch('https://smilebotems.herokuapp.com/attendance/',data1)
            .then((response)=> {
                  if (!response.ok){
+                  document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+                  <strong>Failed!</strong> Any of the field is empty or wrong
+                </div>
+                `
                throw Error(res.statusText)
              }
              return response.json()
              }).then((data)=> {
-             document.getElementById("message").innerHTML=data.message;
+              if (data.message!=undefined)
+              {
+             localStorage.setItem('message',data.message)
+             location.href='attendance.html'
+              }else{
+               document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+               <strong>Failed!</strong> Any field is missing ...all field required
+             </div>
+             `
+              }
                  console.log(data);
              }).catch((e)=>{
                  console.log(e);

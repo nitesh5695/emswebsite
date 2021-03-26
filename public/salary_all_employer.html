@@ -32,7 +32,7 @@
               <!-- general form elements disabled -->
               <div class="card card-warning">
                 <div class="card-header">
-                  <h3 class="card-title">All Employers</h3>
+                  <h3 class="card-title">Salary</h3>
                 </div>
                 <div id="message" style="color:red"> </div>
                 <!-- /.card-header -->
@@ -42,7 +42,7 @@
                        <div class="col-12">
                          <div class="card">
                            <div class="card-header">
-                             <h3 class="card-title">All requests</h3>
+                             <h3 class="card-title">All Employees</h3>
              
                              <div class="card-tools">
                                <div class="input-group input-group-sm" style="width: 150px;">
@@ -66,15 +66,42 @@
                                  </tr>
                                </thead>
                                <tbody id="table">
+                                 
+                                
+                                 
+                                 
+                               </tbody>
+                             </table>
+                           </div>
+                           <!-- /.card-body -->
+                         </div>
+                         <div class="card">
+                           <div class="card-header">
+                             <h3 class="card-title">Payment History</h3>
+             
+                             <div class="card-tools">
+                               <div class="input-group input-group-sm" style="width: 150px;">
+                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+             
+                                 <div class="input-group-append">
+                                   <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                           <!-- /.card-header -->
+                           <div class="card-body table-responsive p-0">
+                             <table class="table table-hover text-nowrap">
+                               <thead>
                                  <tr>
-                                   <td>183</td>
-                                   <td>nitesh</td>
-                                   <td>nitesh.singh5695@gmail.com</td>
-            
-                                   <td><button class="btn btn-primary" onclick="window.location.href='leave_request_detail_form.html'">PayNow</button>
-                                     
- 
+                                   <th>Paid date</th>
+                                   <th>Name</th>
+                                   <th>Month</th>
+                                   <th>Rs</th>
                                  </tr>
+                               </thead>
+                               <tbody id="table_history">
+                                 
                                 
                                  
                                  

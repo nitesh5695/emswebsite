@@ -5,6 +5,15 @@ try{
 catch (errr){
 	location.href="login.html"
 }
+if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+ }
 const company_id=localStorage.getItem('C_user')
 var emp_id;
 var department={}
@@ -40,6 +49,7 @@ async function getdata(){
                
                var option = document.createElement("option");
                   option.text =element.department_name
+                  option.value=element.dept_id
                   select.add(option)       
             });
               console.log(data);
@@ -84,6 +94,7 @@ async function getdata(){
            
             var option = document.createElement("option");
                option.text =element.title
+               option.value=element.project_id
                select.add(option)       
          });
            console.log(data);
@@ -110,10 +121,10 @@ async function Postdata(){
      jobtype= document.getElementById('job_type').value
      dob= document.getElementById('dob').value
      joining_date= document.getElementById('joining_date').value
-     project= 2//document.getElementById('project').value
-     department=1//document.getElementById('department').value
+     project=document.getElementById('project').value
+     department=document.getElementById('department').value
      status="Active"
-    gender=document.getElementById('gender').value
+     gender=document.getElementById('gender').value
     
 
     const postdata= { method:'POST',
@@ -137,11 +148,15 @@ async function Postdata(){
             console.log('token expired') 
            }
            if (!res.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             throw Error(res.statusText)
           }
            return res.json()
            }).then((data)=> {
-               document.getElementById('message').innerHTML=data.message;
+          
                console.log(data);
                
            }).catch((e)=>{
@@ -168,6 +183,10 @@ async function Postdata(){
               location.href="login.html";
              }
              if (!res.ok){
+               document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+               <strong>Failed!</strong> Any of the field is empty or wrong
+             </div>
+             `
               throw Error(res.statusText)
             }
              return res.json()
@@ -218,12 +237,24 @@ async function Postdata(){
              console.log('token expired') 
             }
             if (!response.ok){
+               document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+               <strong>Failed!</strong> Any of the field is empty or wrong
+             </div>
+             `
              throw Error(response.statusText)
            }
             return response.json()
             }).then((data)=> {
-                document.getElementById('message').innerHTML=data.message;
-                console.log(data);
+               if (data.message!=undefined)
+               {
+              localStorage.setItem('message',data.message)
+              location.href='add_employer_form.html'
+               }else{
+                document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+                <strong>Failed!</strong> Any of the field is empty or wrong
+              </div>
+              `
+               }
                
             }).catch((e)=>{
                {

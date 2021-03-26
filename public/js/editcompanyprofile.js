@@ -5,6 +5,15 @@ try{
 catch (errr){
 	location.href="login.html";
 }
+if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+ }
 async function setdata(){
     
     const data= { method:'GET',

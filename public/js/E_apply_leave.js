@@ -4,6 +4,15 @@ try{
 catch (errr){
 	location.href="login.html";
 }
+if(localStorage.getItem('message')!=null)
+{
+  message=localStorage.getItem('message')
+ document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+ <strong>Success!</strong> ${message}
+</div>
+`
+ localStorage.removeItem('message')
+}
 document.getElementById('request').addEventListener('click',apply_leave)
 async function apply_leave(){
     subject=document.getElementById('subject').value
@@ -30,13 +39,27 @@ async function apply_leave(){
             location.href="login.html";
            }
            if (!res.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             throw Error(res.statusText)
           }
            return res.json()
            }).then((data)=> {
+            if (data.message!=undefined)
+            {
+           localStorage.setItem('message',data.message)
+           location.href='E_apply_leave.html'
+            }else{
+             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+             <strong>Failed!</strong> Any of the field is empty or wrong
+           </div>
+           `
+            }
                
                console.log(data);
-               document.getElementById('message').innerHTML=data.message;
+              
                
            }).catch((e)=>{
               {

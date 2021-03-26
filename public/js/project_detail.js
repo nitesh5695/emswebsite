@@ -54,6 +54,9 @@ async function projectdata(){
 
       async function Delete()
       {
+         response=confirm("Are you really want to delete this Project")
+         if(response)
+         {
          const data= { method:'DELETE',
                     
       
@@ -79,6 +82,16 @@ async function projectdata(){
           }
            return res.json()
            }).then((data)=> {
+            if (data.message!=undefined)
+            {
+           localStorage.setItem('message',data.message)
+           location.href='all_projects.html'
+            }else{
+             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+             <strong>Failed!</strong> Any of the field is empty or wrong
+           </div>
+           `
+            }
                console.log(data);
               
            }).catch((e)=>{
@@ -88,3 +101,4 @@ async function projectdata(){
               }
            });
       }
+   }

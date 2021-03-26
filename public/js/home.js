@@ -60,6 +60,7 @@ var manage_salary=document.getElementById("manage_salary")
 var attendance=document.getElementById("attendance")
 var setup_analysis=document.getElementById("setup_analysis")
 var all_reviews=document.getElementById("all_reviews")
+var special_user=document.getElementById('special_users')
 
 profilebutton.addEventListener("click",link1)
 addemployer.addEventListener("click",link5)
@@ -73,6 +74,7 @@ view_projects.addEventListener('click',link9)
 attendance.addEventListener('click',link10)
 setup_analysis.addEventListener('click',link11)
 all_reviews.addEventListener('click',link12)
+special_user.addEventListener('click',link13)
 if(localStorage.getItem('src'))
 {
 	frame.src=localStorage.getItem('src')
@@ -134,6 +136,10 @@ function link8(){
 	frame.src="all_review.html"
 	localStorage.setItem('src',frame.src)
   }   
+  function link13(){
+	frame.src="add_special_user.html"
+	localStorage.setItem('src',frame.src)
+  }  
   function logout(){
 	localStorage.clear();
 	location.href="login.html";

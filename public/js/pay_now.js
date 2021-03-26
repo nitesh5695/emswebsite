@@ -71,11 +71,25 @@ async function post_salary_data() {
      {
       location.href="login.html"
      }
-    if (!res.ok){
+    if (res.status_code==400){
+      document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+      <strong>Failed!</strong> Any of the field is empty or wrong
+    </div>
+    `
       throw Error(res.status)
     }
      return res.json()
      }).then((data)=> {
+       if (data.message!=undefined)
+       {
+      localStorage.setItem('message',data.message)
+      location.href='salary_all_employer.html'
+       }else{
+        document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+        <strong>Failed!</strong> Any of the field is empty or wrong
+      </div>
+      `
+       }
          console.log(data);
      }).catch((e)=>{
         {

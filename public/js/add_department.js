@@ -4,6 +4,15 @@ try{
 catch (errr){
 	location.href="login.html"
 }
+if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+ }
 document.getElementById('requestbutton').addEventListener('click',make_request)
 async function getdata(){
     
@@ -68,12 +77,24 @@ async function add_department(){
   const response=await fetch('https://smilebotems.herokuapp.com/add_department/',data)
     .then((response)=> {
           if (!response.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
         throw Error(res.statusText)
       }
       return response.json()
       }).then((data)=> {
-      document.getElementById("message").innerHTML=data.message;
-      
+        if (data.message!=undefined)
+        {
+       localStorage.setItem('message',data.message)
+       location.href='add_department_form.html'
+        }else{
+         document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+         <strong>Failed!</strong> Any of the field is empty or wrong
+       </div>
+       `
+        }
           console.log(data);
       }).catch((e)=>{
           console.log(e);
@@ -95,6 +116,7 @@ async function add_department(){
            if(res.statusText=="Forbidden")
            {
             console.log('token expired') 
+            location.href="index.html"
            }
            if (!res.ok){
             throw Error(res.statusText)
@@ -138,7 +160,16 @@ const deldata= { method:'DELETE',
            return res.json()
            }).then((data)=> {
                console.log(data);
-               document.getElementById('message').innerHTML=data.message;
+               if (data.message!=undefined)
+        {
+       localStorage.setItem('message',data.message)
+       location.href='add_department_form.html'
+        }else{
+         document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+         <strong>Failed!</strong> Any of the field is empty or wrong
+       </div>
+       `
+        }
                
            }).catch((e)=>{
               {
@@ -170,12 +201,24 @@ const deldata= { method:'DELETE',
   const response=await fetch('https://smilebotems.herokuapp.com/departments/',data)
     .then((response)=> {
           if (!response.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
         throw Error(res.statusText)
       }
       return response.json()
       }).then((data)=> {
-      document.getElementById("message").innerHTML=data.message;
-      
+        if (data.message!=undefined)
+        {
+       localStorage.setItem('message',data.message)
+       location.href='add_department_form.html'
+        }else{
+         document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+         <strong>Failed!</strong> Any of the field is empty or wrong
+       </div>
+       `
+        }
           console.log(data);
       }).catch((e)=>{
           console.log(e);

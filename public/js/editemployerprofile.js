@@ -4,6 +4,15 @@ try{
 catch (errr){
 	location.href="login.html";
 }
+if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+ }
 emp_id=localStorage.getItem('emp_id')
 document.getElementById('submit').addEventListener('click',update)
 async function getdata(){
@@ -25,6 +34,10 @@ const data= { method:'GET',
         location.href="login.html";
        }
        if (!res.ok){
+         document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+         <strong>Failed!</strong> Any of the field is empty or wrong
+       </div>
+       `
         throw Error(res.statusText)
       }
        return res.json()
@@ -224,11 +237,24 @@ async function update(){
             console.log('token expired') 
            }
            if (!res.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             throw Error(res.statusText)
           }
            return res.json()
            }).then((data)=> {
-               document.getElementById('message').innerHTML=data.message;
+            if (data.message!=undefined)
+        {
+       localStorage.setItem('message',data.message)
+       location.href='editemployerProfile.html'
+        }else{
+         document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+         <strong>Failed!</strong> Any of the field is empty or wrong
+       </div>
+       `
+        }
                console.log(data);
                
            }).catch((e)=>{

@@ -4,6 +4,15 @@ try{
 catch (errr){
 	location.href="login.html"
 }
+if(localStorage.getItem('message')!=null)
+{
+  message=localStorage.getItem('message')
+ document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+ <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+}
 document.getElementById('search').addEventListener('click',search)
 async function employersdata(){
     
@@ -45,10 +54,16 @@ async function employersdata(){
                             <h2 class="lead"><b>${element.name}</b></h2>
                             <p class="text-muted text-sm"><b>Email id: </b>${element.email}  </p><br>
                             <p class="text-muted text-sm"><b>Employer id: </b>${element.emp_id} </p>
+                              <span>Rating:</span><br>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star checked"></span>
+  <span class="fa fa-star"></span>
                            
                           </div>
                           <div class="col-5 text-center">
-                            <img src="" alt="" class="img-circle img-fluid">
+                            <img src="dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
                           </div>
                         </div>
                       </div>
@@ -136,12 +151,14 @@ async function employersdata(){
                      <div class="row">
                        <div class="col-7">
                          <h2 class="lead"><b>${element.name}</b></h2>
+                         
                          <p class="text-muted text-sm"><b>Email id: </b>${element.email}  </p><br>
                          <p class="text-muted text-sm"><b>Employer id: </b>${element.emp_id} </p>
+                         
                         
                        </div>
                        <div class="col-5 text-center">
-                         <img src="../../dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
+                         <img src="dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
                        </div>
                      </div>
                    </div>

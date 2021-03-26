@@ -90,6 +90,16 @@ async function leavedata(){
              }
               return res.json()
               }).then((data)=> {
+                if (data.message!=undefined)
+                {
+               localStorage.setItem('message','Leave Request Response submited')
+               location.href='manageleavesform.html'
+                }else{
+                 document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+                 <strong>Failed!</strong> Process Failed ...try again
+               </div>
+               `
+                }
                   console.log(data); 
               }).catch((e)=>{
                  {

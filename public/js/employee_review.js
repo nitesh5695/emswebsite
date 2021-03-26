@@ -1,6 +1,15 @@
 var allques=[];
 var f_month;
 var year;
+if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+ }
 const monthNames = ["null","January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
@@ -101,10 +110,8 @@ async function myquestions(){
             </div>
                    <div class="row">
                         <div class="col-sm-6">
-                            <button onclick="update_review()" class="btn btn-danger">Edit</button>
+                            <button onclick="single_update_review(${element.phase_id},${ques.question_id})" class="btn btn-danger">Edit</button>
                               </div>
-                             
-           
                   </div>
               </div>
             </div>
@@ -175,6 +182,7 @@ async function getweek1(year,month,week){
          com_td=document.getElementById("comment"+element.questions_id)
          by=document.getElementById("by"+element.questions_id)
          rating=document.getElementById("mark"+element.questions_id)
+         rating.className=element.review_id
          td.innerHTML=element.review
          com_td.innerHTML=element.comment
          by.innerHTML=element.reviewed_by
@@ -214,10 +222,23 @@ async function getweek1(year,month,week){
    if (f_month==09){f_month=9}
    document.getElementById("month").innerHTML=monthNames[f_month]
  }
-  //document.getElementById("edit_review").addEventListener('click',update_review)
+  document.getElementById("edit_review").addEventListener('click',update_review)
  function update_review(){
    localStorage.setItem('r_year',year)
    localStorage.setItem('r_month',f_month)
    localStorage.setItem('r_week',selected_week)
+   localStorage.setItem('src','edit_review.html')
    location.href="edit_review.html"
  }
+
+ function single_update_review(phase_id,question_id){
+ var review_id=document.getElementById("mark"+question_id).className
+  localStorage.setItem('r_year',year)
+  localStorage.setItem('r_month',f_month)
+  localStorage.setItem('r_week',selected_week)
+  localStorage.setItem('phase_id',phase_id)
+  localStorage.setItem('question_id',question_id)
+  localStorage.setItem('review_id',review_id)
+  console.log(review_id)
+  location.href="single_edit_review.html"
+}

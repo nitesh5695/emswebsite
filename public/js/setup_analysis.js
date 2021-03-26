@@ -2,6 +2,19 @@ document.getElementById('Add').addEventListener('click',add_more);
 document.getElementById('remove').addEventListener('click',Remove);
 document.getElementById('Submit').addEventListener('click',Submit_data);
 document.getElementById('add_choice').addEventListener('click',add_choice);
+
+ if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+  localStorage.removeItem('message')
+ }
+
+
+
 var count=2;
 var divQ=document.getElementById('questions')
 var cmp_id=localStorage.getItem('C_user')
@@ -75,11 +88,24 @@ async function Submit_data()
     .then((response)=> {
           if (!response.ok){
             console.log(response.json())
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
         throw Error(response.statusText)
       }
       return response.json()
       }).then((data)=> {
-      document.getElementById("message").innerHTML=data.message;
+        if (data.message!=undefined)
+        {
+       localStorage.setItem('message',data.message)
+       location.href='setup_analysis.html'
+        }else{
+         document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+         <strong>Failed!</strong> Any of the field is empty or wrong
+       </div>
+       `
+        }
           console.log(data);
       }).catch((e)=>{
           console.log(e);
@@ -103,6 +129,7 @@ async function myquestions(){
            if(res.statusText=="Forbidden")
            {
             console.log('token expired') 
+            location.href="index.html"
            }
            if (!res.ok){
             throw Error(res.statusText)
@@ -145,13 +172,17 @@ async function myquestions(){
             await fetch('http://127.0.0.1:7002/phases/'+id+'/',data)
              .then((res)=> {
                if (!res.ok){
+                document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+                <strong>Failed!</strong> Any of the field is empty or wrong or anyother problem..
+              </div>
+              `
                 throw Error(res.statusText)
               }
                return res.json()
                }).then((data)=> {
                    console.log(data);
-                   document.getElementById('message').innerHTML=data.message;
-                   
+                   document.getElementById("message").innerHTML=data.message;localStorage.setItem('message',data.message)
+                   location.href='setup_analysis.html'
                }).catch((e)=>{
                   {
                      console.log(e) 
@@ -175,12 +206,17 @@ async function myquestions(){
   await  fetch('http://127.0.0.1:7002/choices/',choice_data1)
     .then((response)=> {
           if (!response.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             console.log(response.json())
         throw Error(response.statusText)
       }
       return response.json()
       }).then((data)=> {
-      document.getElementById("message").innerHTML=data.message;
+        document.getElementById("message").innerHTML=data.message;localStorage.setItem('message',data.message)
+        location.href='setup_analysis.html'
           console.log(data);
       }).catch((e)=>{
           console.log(e);
@@ -203,6 +239,7 @@ async function myquestions(){
            if(res.statusText=="Forbidden")
            {
             console.log('token expired') 
+            location.href="index.html"
            }
            if (!res.ok){
             throw Error(res.statusText)
@@ -240,12 +277,18 @@ async function Deletechoice(id){
           await fetch('http://127.0.0.1:7002/choices/'+id+'/',data)
            .then((res)=> {
              if (!res.ok){
+              document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+              <strong>Failed!</strong> Any of the field is empty or wrong
+            </div>
+            `
               throw Error(res.statusText)
             }
              return res.json()
              }).then((data)=> {
+              document.getElementById("message").innerHTML=data.message;localStorage.setItem('message',data.message)
+              location.href='setup_analysis.html'
                  console.log(data);
-                 document.getElementById('message').innerHTML=data.message;
+                
                  
              }).catch((e)=>{
                 {

@@ -1,18 +1,23 @@
  var phase_id=localStorage.getItem('phase_id')
  var phase_data;
  cmp_id=localStorage.getItem('C_user')
+
  document.getElementById('update').addEventListener('click',update_question)
 async function update_question(){
+    console.log(phase_data)
     var arr=[];
     phase_data.forEach(element=>{
-        question=document.getElementById(element.question_id).value
+      element.questions.forEach(ques=>{
+        question=document.getElementById(ques.question_id).value
+       
         data={
-            "question_id":element.question_id,
+            "question_id":ques.question_id,
             "question":question,
             "company_id":cmp_id
              
         }
         arr.push(data)
+      })
     })
     
 
@@ -28,12 +33,18 @@ async function update_question(){
   await  fetch('http://127.0.0.1:7002/questions/',question_data)
     .then((response)=> {
           if (!response.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             console.log(response.json())
         throw Error(response.statusText)
       }
       return response.json()
       }).then((data)=> {
-      document.getElementById("message").innerHTML=data.message;
+      
+      localStorage.setItem('message','Question updation successfull')
+      location.href='setup_analysis.html'
           console.log(data);
       }).catch((e)=>{
           console.log(e);
@@ -60,17 +71,24 @@ async function update_question(){
           }
            return res.json()
            }).then((data)=> {
+             
                phase_data=data
+               console.log(phase_data)
+               
             div=document.getElementById('body')
+           
             data.forEach(elem=>{
-              document.getElementById("phase_name").value=elem.phase_name;
+              phaseName=document.getElementById('phases');
+              phaseName.value=elem.phase_name
+             
               console.log(elem.phase_name)
+              
              elem.questions.forEach(element => {
         
                  div.innerHTML+=`
                  <div class="form-group" >
                  <label for="inputName">Question</label>
-                 <input type="text" id=${element.question_id} class="form-control" value="${element.question}">
+                 <input type="text" id=${element.question_id}  class="form-control" value="${element.question}">
                </div>
                  `
              });

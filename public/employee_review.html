@@ -12,7 +12,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Employee Review</h1>
+          <h1 class="m-0 text-dark">Employee Review (<span style="color:red" id="emp_name"></span>)</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -34,7 +34,7 @@
                 <input style="display:inline" class=" mx-1 my-1"  type="month" id="select_month" min="2021-01">
                 <button  id="month_button" class="btn btn-danger  my-1">Go</button>
                 </div>
-                  <h3 id="emp_name" class="card-title"></h3>
+                  
                   <h2 id="month" class="text-center"></h2>
                 </div>
                 
@@ -43,12 +43,12 @@
                 <p id="message" style="color:red;"></p>
                
                <div class="card card-secondary">
-               
+               <button id="edit_review" class="btn btn-success my-3">Edit Reviews</button
                
                 <!-- /.card-header --> 
               
 
-                  <div >
+                  <div>
             <div class="card card-primary card-tabs">
               <div class="card-header p-0 pt-1">
                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
