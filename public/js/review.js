@@ -3,6 +3,11 @@ document.getElementById('submit').addEventListener('click',submit_data)
 var all_phases;
 var choice_data;
 var weekdate;
+var week_selected;
+var user_name=localStorage.getItem('admin_name')
+if (user_name==null)
+{user_name="superuser"}
+console.log(user_name)
 
 document.getElementById('emp_name').innerHTML=localStorage.getItem('emp_name')
 var emp_id=localStorage.getItem("emp_id")
@@ -25,7 +30,7 @@ const monthNames = ["null","January", "February", "March", "April", "May", "June
 document.getElementById('month_button').addEventListener('click',set_date)
 function set_date(){
   month_input=document.getElementById('select_month').value
-   console.log("gjyffyj")
+ 
    var only_month=month_input.split("-")
   
    month=only_month[1]
@@ -161,7 +166,7 @@ async function submit_data()
         "review": review,
         "comment":comment,
         "marks":mark,
-        "reviewed_by":"Nitesh"
+        "reviewed_by":user_name,
 
      }
         arr.push(data)
@@ -226,7 +231,7 @@ async function weekdata(year,month,date){
   var w3=21
   week4=year+"-"+month+"-"+"28"
   var w4=28
-  month_name=monthNames[d.getMonth()]
+  month_name=monthNames[d.getMonth()+1]
   document.getElementById("month").innerHTML=month_name
   console.log(week1)
   console.log(d.getTime())
@@ -285,28 +290,43 @@ if (w4<date){
       {week.push({"current_week":week4,"name":"Week4"})}
     });
 }
+week_selected=week
 div=document.getElementById("week_row")
 div.innerHTML=null
 var count=1
+if (week.length==0)
+{div.innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+<strong>Alert!</strong> You can't give review Now
+</div>`}
 week.forEach(w=>{
   
 div.innerHTML+=`
 <div class="col-sm-3 my-2">
 <button class='btn btn-danger' onclick='getdate("${w.current_week}")' id="${w.current_week}">${w.name}</button> 
 
-</div>
-`
+</div>`
 count+=1
+
 })
 
 }
 weekdata(current_year,current_month,compare_date)
 function getdate(id){
+  week_selected.forEach(w=>{
+    if(w.current_week==id){
+      document.getElementById(id).innerHTML="selected";
+      document.getElementById(id).style.backgroundColor="green";
+      weekdate=id;
+    }else
+    {
+     btn=document.getElementById(w.current_week);
+     btn.innerHTML=w.name
+     btn.style.backgroundColor="red";
   
-   weekdate=id;
-   console.log(weekdate)
-  document.getElementById(id).innerHTML="selected";
-  document.getElementById(id).style.backgroundColor="green";
+    }
+  })
+ 
+  console.log(weekdate)
 }
 async function getoptions(){
   const getdata= { method:'GET',

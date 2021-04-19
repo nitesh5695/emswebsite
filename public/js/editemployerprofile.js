@@ -13,6 +13,8 @@ if(localStorage.getItem('message')!=null)
 `
 localStorage.removeItem('message')
  }
+
+
 emp_id=localStorage.getItem('emp_id')
 document.getElementById('submit').addEventListener('click',update)
 async function getdata(){
@@ -25,7 +27,7 @@ const data= { method:'GET',
        
      },
      }
-    const res= await  fetch('https://smilebotems.herokuapp.com/departments/',data)
+    const res= await  fetch('http://127.0.0.1:7002/departments/',data)
      .then((res)=> {
 
         console.log(res)
@@ -48,6 +50,7 @@ const data= { method:'GET',
             console.log(element.department_name)
             var option = document.createElement("option");
                option.text =element.department_name
+               option.value=element.dept_id
                select.add(option)       
          });
            console.log(data);
@@ -73,7 +76,7 @@ const pdata= { method:'GET',
      },
      }
 
- const res= await  fetch('https://smilebotems.herokuapp.com/projects/',pdata)
+ const res= await  fetch('http://127.0.0.1:7002/projects/',pdata)
   .then((res)=> {
 
      console.log(res)
@@ -89,9 +92,10 @@ const pdata= { method:'GET',
 
       var select=document.getElementById('project')
       data.forEach(element => {
-         console.log(element.department_name)
+       
          var option = document.createElement("option");
-            option.text =element.title
+         option.text =element.title
+         option.value=element.project_id
             select.add(option)       
       });
         console.log(data);
@@ -120,7 +124,7 @@ async function setdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/'+emp_id+'/',data)
+        const res= await  fetch('http://127.0.0.1:7002/employer_register/'+emp_id+'/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -157,7 +161,7 @@ async function setdata(){
         
          }
        
-        const resprofile= await  fetch('https://smilebotems.herokuapp.com/employer_profile/'+emp_id+'/',data1)
+        const resprofile= await  fetch('http://127.0.0.1:7002/employer_profile/'+emp_id+'/',data1)
          .then((resprofile)=> {
 
             console.log(resprofile)
@@ -176,7 +180,7 @@ async function setdata(){
            
             document.getElementById('address').value=data.address
             document.getElementById('contact_no').value=data.mobile_no
-            document.getElementById('job_type').value="NA"
+            document.getElementById('job_type').value=job_type
             document.getElementById('dob').value=data.dob
             document.getElementById('joining_date').value=data.joining_date
             document.getElementById('project').value=data.project_id
@@ -209,26 +213,43 @@ async function update(){
     jobtype= document.getElementById('job_type').value
     dob= document.getElementById('dob').value
     joining_date= document.getElementById('joining_date').value
-    //project= 2//document.getElementById('project').value
-    //department= 1//document.getElementById('department').value
-    
+    project=document.getElementById('project').value
+    department= document.getElementById('department').value
+    profile=document.getElementById('profile')
 
     
+
+    const formdata=new FormData()
+     
+      formdata.append('address',address)
+      formdata.append('mobile_no',contact_no)
+      formdata.append('job_type',jobtype)
+      formdata.append('dob',dob)
+      formdata.append('joining_date',joining_date)
+      formdata.append('project',project)
+      formdata.append('department_id',department)
+      formdata.append('gender',gender)
+      if(profile.files[0]!=undefined){
+         formdata.append('profile_image',profile.files[0])
+        
+       }
+      
+
 
     const postdata= { method:'PATCH',
                     
       
      
          headers:{
-           'Content-Type':'application/json',
+           
             Authorization: 'Bearer ' + localStorage.getItem("user_token")
            
          },
-         body:JSON.stringify({emp_id:emp_id,gender:gender,address:address,mobile_no:contact_no,dob:dob,joining_date:joining_date,project_id:project,department_id:department})
+         body:formdata
             
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/employer_profile/'+emp_id+'/',postdata)
+        const res= await  fetch('http://127.0.0.1:7002/employer_profile/'+emp_id+'/',postdata)
          .then((res)=> {
 
             console.log(res)

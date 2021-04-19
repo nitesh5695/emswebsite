@@ -7,18 +7,13 @@ catch (errr){
 async function data(){
     
     const data= { method:'GET',
-                    
-      
-     
+        
          headers:{
            'Content-Type':'application/json',
             Authorization: 'Bearer ' + localStorage.getItem("user_token")
-           
-         },
-           
+         },  
          }
-       
-        const res= await  fetch('https://smilebotems.herokuapp.com/dashboard/',data)
+        const res= await  fetch('http://127.0.0.1:7002/E_dashboard/',data)
          .then((res)=> {
               
            console.log(res.statusText)

@@ -14,11 +14,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">   <link rel="stylesheet" href="css/style.css">
+  
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" onload="preloader()">
+<div id="loading"></div>
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -37,17 +39,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-
+   
+<ul class="navbar-nav ml-auto">
+     <li class="nav-item">
+      <i class="fas fa-user"></i>
+         <h6 style="display:inline" id="name">Superuser</h6>
+      </li>
+    </ul>
     <!-- Right navbar links -->
     
   </nav>
@@ -237,6 +235,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <p>Create user</p>
                       </a>
                     </li>
+                    <li id="users" class="nav-item">
+                      <a  class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Users</p>
+                      </a>
+                    </li>
+
 
         </ul>
       </nav>

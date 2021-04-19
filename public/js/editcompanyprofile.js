@@ -1,4 +1,4 @@
-var companyid ;
+var company_id ;
 try{
 	user=localStorage.getItem('C_user')
 }
@@ -8,12 +8,13 @@ catch (errr){
 if(localStorage.getItem('message')!=null)
  {
    message=localStorage.getItem('message')
-  document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+   document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
   <strong>Success!</strong> ${message}
 </div>
 `
 localStorage.removeItem('message')
  }
+ 
 async function setdata(){
     
     const data= { method:'GET',
@@ -28,7 +29,7 @@ async function setdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/company_register/',data)
+        const res= await  fetch('http://127.0.0.1:7002/company_register/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -44,7 +45,7 @@ async function setdata(){
                console.log(data);
                document.getElementById('companyemail').value=data.email;
                document.getElementById('companyname').value=data.company_name;
-               companyid=data.company_id;
+               company_id=data.company_id;
            }).catch((e)=>{
               {
                  console.log(e) 
@@ -70,13 +71,14 @@ async function setdata(){
         
          }
        
-        const resprofile= await  fetch('https://smilebotems.herokuapp.com/company_profile/',data1)
+        const resprofile= await  fetch('http://127.0.0.1:7002/company_profile/',data1)
          .then((resprofile)=> {
 
             console.log(resprofile)
            if(resprofile.statusText=="Forbidden")
            {
             console.log('token expired') 
+            location.href='login.html'
            }
            if (!resprofile.ok){
             throw Error(resprofile.statusText)
@@ -109,34 +111,66 @@ async function putdata(){
     address= document.getElementById('address').value
     contact_no= document.getElementById('contact_no').value
     gst_no= document.getElementById('gst_no').value
+    logo= document.getElementById('logo')
+    console.log(logo.files[0])
+    
+    const formdata=new FormData()
+    formdata.append('company_id',company_id)
+    formdata.append('ceo',ceo_name)
+    formdata.append('established_year',established_year)
+    formdata.append('address',address)
+    formdata.append('contact_no',contact_no)
+    formdata.append('gst_no',gst_no)
+    if(logo.files[0]!=undefined){
+      formdata.append('company_logo',logo.files[0])
+     
+    }
+    
 
-    const putdata= { method:'PUT',
+
+
+    const putdata= { method:'PATCH',
                     
       
      
          headers:{
-           'Content-Type':'application/json',
+          
             Authorization: 'Bearer ' + localStorage.getItem("user_token")
            
          },
-         body:JSON.stringify({company_id:companyid,ceo:ceo_name,established_year:established_year,address:address,contact_no:contact_no,gst_no:gst_no})
-         }
+     
+         body:formdata
+          }
+         
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/company_profile/',putdata)
+        const res= await  fetch('http://127.0.0.1:7002/company_profile/',putdata)
          .then((res)=> {
-
-            console.log(res)
+            
            if(res.statusText=="Forbidden")
            {
             console.log('token expired') 
+            location.href='login.html'
            }
            if (!res.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             throw Error(res.statusText)
           }
            return res.json()
            }).then((data)=> {
-               document.getElementById('message').innerHTML=data.message;
-               console.log(data);
+            if (data.message!=undefined)
+            {
+           localStorage.setItem('message',data.message)
+           location.href='editcompanyprofile.html'
+            }else{
+             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+             <strong>Failed!</strong> Any of the field is empty or wrong check filename
+           </div>
+           `
+            }
+              
                
            }).catch((e)=>{
               {

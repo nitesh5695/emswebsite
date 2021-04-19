@@ -19,7 +19,7 @@ async function check2(){
     body:JSON.stringify({email:email,company_name:name,password:password})
   }
 
-const response=await fetch('https://smilebotems.herokuapp.com/new_user/',data)
+const response=await fetch('http://127.0.0.1:7002/new_user/',data)
   .then((response)=> {
 		if (!response.ok){
       throw Error(res.statusText)

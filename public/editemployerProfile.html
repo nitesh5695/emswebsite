@@ -5,7 +5,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">   <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
 <div class="content-header">
@@ -91,9 +91,9 @@
                           <div class="form-group">
                             <label> Job Type </label>
                             <select id="job_type" class="form-control">
-                              <option>Full Time</option>
-                              <option>Part Time</option>
-                              <option>Training</option>
+                              <option value="Full Time">Full Time</option>
+                              <option value="Part Time">Part Time</option>
+                              <option value="Training">Training</option>
                             </select>
                           </div>
                       </div>
@@ -124,9 +124,9 @@
                           <div class="form-group">
                             <label> Gender </label>
                             <select id="gender" class="form-control">
-                              <option>Male</option>
-                              <option>Female</option>
-                              <option>others</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Others">others</option>
                             </select>
                           </div>
                         </div>
@@ -158,6 +158,13 @@
                             </select>
                           </div>
                         </div>
+                           <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Profile Picture</label>
+                          <input id="profile" type="file" class="form-control" >
+                        </div>
+                    </div>
                       
                     </div>
                       

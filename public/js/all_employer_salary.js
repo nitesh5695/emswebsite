@@ -14,6 +14,9 @@ if(localStorage.getItem('message')!=null)
 localStorage.removeItem('message')
  }
  var all_emp;
+ var next_url="http://127.0.0.1:7002/salary/"
+ var prev_url="http://127.0.0.1:7002/salary/"
+ //document.getElementById('next_page').addEventListener('click',get_url(url))
 async function employersdata(){
     
     const data= { method:'GET',
@@ -28,7 +31,7 @@ async function employersdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/',data)
+        const res= await  fetch('http://127.0.0.1:7002/employer_register/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -64,11 +67,11 @@ async function employersdata(){
               }
            });
     
-           salary_data()
+           salary_data('http://127.0.0.1:7002/salary/')
         }
     employersdata()  
     
-    async function salary_data(){
+    async function salary_data(url){
     
       const data= { method:'GET',
                       
@@ -82,7 +85,7 @@ async function employersdata(){
              
            }
          
-          const res= await  fetch('https://smilebotems.herokuapp.com/salary/',data)
+          const res= await  fetch(url,data)
            .then((res)=> {
                 
              console.log(res.statusText)
@@ -97,19 +100,23 @@ async function employersdata(){
              }).then((data)=> {
                  console.log(data);
                  let div=document.getElementById('table_history')
-                 data.forEach(element => {
+                 data.results .forEach(element => {
                      div.innerHTML +=`  <tr>
                      <td>${element.paid_date}</td>
                      <td class=${element.emp_id}>name</td>
                      <td>${element.month}</td>
                      <td>${element.salary}</td>                 
-  
                    </tr>`
                      
                  });
+                 next_url=data.next
+                 prev_url=data.previous
+                 document.getElementById('next_page').setAttribute('onclick','Next_url()')
+                 document.getElementById('prev_page').setAttribute('onclick','previous_url()')
+                
                  all_emp.forEach(emp=>{
                    try{
-                     td=document.getElementsByClassName(emp.emp_id)
+                     td=document.getElementsByClassName(emp.emp_id);
                      
                      [].slice.call(td).forEach(elem=>{
                        elem.innerHTML=emp.name
@@ -134,3 +141,11 @@ async function employersdata(){
         localStorage.setItem("emp_id",emp_id)
         location.href='pay_now_form.html'
     }  
+function previous_url(){
+  document.getElementById('table_history').innerHTML=null
+ salary_data(prev_url)
+}  
+function Next_url(){
+  document.getElementById('table_history').innerHTML=null
+  salary_data(next_url)
+}

@@ -18,7 +18,7 @@ async function data(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/dashboard/',data)
+        const res= await  fetch('http://127.0.0.1:7002/dashboard/',data)
          .then((res)=> {
               
            console.log(res.statusText)

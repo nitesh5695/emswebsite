@@ -16,7 +16,7 @@ async function employerdata() {
     },
   };
 
-  const res = await fetch("https://smilebotems.herokuapp.com/employer_register/" + emp_id + "/",
+  const res = await fetch('http://127.0.0.1:7002/employer_register/' + emp_id + "/",
     data
   )
     .then((res) => {
@@ -63,7 +63,7 @@ async function post_salary_data() {
     }),
   };
   
-  const res=await fetch("https://smilebotems.herokuapp.com/salary/" +emp_id+"/", data)
+  const res=await fetch('http://127.0.0.1:7002/salary/' +emp_id+'/', data)
     .then((res)=> {
 
      console.log(res)

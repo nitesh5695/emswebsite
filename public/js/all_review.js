@@ -28,7 +28,7 @@ async function employersdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/',data)
+        const res= await  fetch('http://127.0.0.1:7002/employer_register/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -43,7 +43,13 @@ async function employersdata(){
            }).then((data)=> {
                console.log(data);
                let div=document.getElementById('appendablediv')
+             
                data.forEach(element => {
+                var  employee_image="../../dist/img/user2-160x160.jpg"
+                if (element.profile!=null && element.profile.profile_image!=null){
+                  employee_image="http://127.0.0.1:7002"+element.profile.profile_image
+                  console.log(employee_image)
+                }
                    div.innerHTML +=`
                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                     <div class="card bg-light">
@@ -53,7 +59,7 @@ async function employersdata(){
                           <div class="col-7">
                             <h2 class="lead"><b>${element.name}</b></h2>
                             <p class="text-muted text-sm"><b>Email id: </b>${element.email}  </p><br>
-                            <p class="text-muted text-sm"><b>Employer id: </b>${element.emp_id} </p>
+                            <p class="text-muted text-sm"><b>Employee id: </b>${element.emp_id} </p>
                               <span>Rating:</span><br>
   <span class="fa fa-star checked"></span>
   <span class="fa fa-star checked"></span>
@@ -63,7 +69,7 @@ async function employersdata(){
                            
                           </div>
                           <div class="col-5 text-center">
-                            <img src="dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
+                            <img id="img${element.emp_id}"" alt="no-image" class="img-circle img-fluid">
                           </div>
                         </div>
                       </div>
@@ -85,6 +91,7 @@ async function employersdata(){
                     </div>
                   </div>
                    `
+                   document.getElementById("img"+element.emp_id).src=employee_image
                });
             
            }).catch((e)=>{
@@ -142,6 +149,10 @@ async function employersdata(){
             let div=document.getElementById('appendablediv')
             div.innerHTML="."
             data.forEach(element => {
+              if (element.profile!=null && element.profile.profile_image!=null){
+                employee_image="http://127.0.0.1:7002"+element.profile.profile_image
+                console.log(employee_image)
+              }
               
                 div.innerHTML +=`
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
@@ -153,12 +164,12 @@ async function employersdata(){
                          <h2 class="lead"><b>${element.name}</b></h2>
                          
                          <p class="text-muted text-sm"><b>Email id: </b>${element.email}  </p><br>
-                         <p class="text-muted text-sm"><b>Employer id: </b>${element.emp_id} </p>
+                         <p class="text-muted text-sm"><b>Employee id: </b>${element.emp_id} </p>
                          
                         
                        </div>
                        <div class="col-5 text-center">
-                         <img src="dist/img/user2-160x160.jpg" alt="" class="img-circle img-fluid">
+                         <img  id="img${element.emp_id}" src="" alt="no-image" class="img-circle img-fluid">
                        </div>
                      </div>
                    </div>
@@ -180,6 +191,7 @@ async function employersdata(){
                  </div>
                </div>
                 `
+                document.getElementById("img"+element.emp_id).src=employee_image
             });
          
         }).catch((e)=>{

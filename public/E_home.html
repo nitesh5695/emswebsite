@@ -14,11 +14,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">   <link rel="stylesheet" href="css/style.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" onload="preloader()">
+<div id="loading"></div>
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -34,25 +35,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a class="nav-link"> Hello <b style="color:crimson" id="login_name"> </b></a>
-      </li>
+     
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+   
 
     <!-- Right navbar links -->
-    
+    <ul class="navbar-nav ml-auto">
+     <li class="nav-item">
+      <i class="fas fa-user"></i>
+         <h6 class="nav-link" style="display:inline"> Hello <b style="color:crimson;" id="login_name"> </b></h6>
+      </li>
+    </ul>
   </nav>
   <!-- /.navbar -->
 

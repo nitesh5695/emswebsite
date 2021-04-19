@@ -20,7 +20,7 @@ async function projectdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/projects/'+project_id+'/',data)
+        const res= await  fetch('http://127.0.0.1:7002/projects/'+project_id+'/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -69,7 +69,7 @@ async function projectdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/projects/'+project_id+'/',data)
+        const res= await  fetch('http://127.0.0.1:7002/projects/'+project_id+'/',data)
          .then((res)=> {
               
            console.log(res.statusText)

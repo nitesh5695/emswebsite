@@ -110,7 +110,7 @@ async function myquestions(){
             </div>
                    <div class="row">
                         <div class="col-sm-6">
-                            <button onclick="single_update_review(${element.phase_id},${ques.question_id})" class="btn btn-danger">Edit</button>
+                            <button id="edit${ques.question_id}" onclick="single_update_review(${element.phase_id},${ques.question_id})" class="btn btn-danger">Edit</button>
                               </div>
                   </div>
               </div>
@@ -168,7 +168,15 @@ async function getweek1(year,month,week){
         allques.forEach(element => {
         
           td=document.getElementById(element.question_id)
-          td.innerHTML="<h6 style='color:red'>No review</h6>"           
+          td.innerHTML=`<h6 style='color:red'>No review</h6>`
+          console.log(allques)
+         document.getElementById(element.question_id).innerHTML="<h6 style='color:red'>No review</h6>" 
+         document.getElementById("comment"+element.question_id).innerHTML="<h6 style='color:red'>No review</h6>" 
+         document.getElementById("by"+element.question_id).innerHTML="<h6 style='color:red'>No review</h6>" 
+         document.getElementById("mark"+element.question_id).innerHTML="<h6 style='color:red'>No review</h6>" 
+         document.getElementById("edit"+element.question_id).disabled=true;
+         document.getElementById("edit_review").disabled=true;
+              
          });   
       }else{
        var row_counter=0
@@ -182,6 +190,8 @@ async function getweek1(year,month,week){
          com_td=document.getElementById("comment"+element.questions_id)
          by=document.getElementById("by"+element.questions_id)
          rating=document.getElementById("mark"+element.questions_id)
+         document.getElementById("edit"+element.questions_id).disabled=false;
+         document.getElementById("edit_review").disabled=false;
          rating.className=element.review_id
          td.innerHTML=element.review
          com_td.innerHTML=element.comment

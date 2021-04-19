@@ -30,7 +30,7 @@ async function apply_leave(){
          body:JSON.stringify({subject:subject,from_date:from_date,to_date:to_date,leave_type:leave_type,reason:reason})
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/leave_detail/',data)
+        const res= await  fetch('http://127.0.0.1:7002/leave_detail/',data)
          .then((res)=> {
 
             console.log(res)

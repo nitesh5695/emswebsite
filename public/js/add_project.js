@@ -38,7 +38,7 @@ async function add_project(){
         company_id:2})
     }
   
-  const response=await fetch('https://smilebotems.herokuapp.com/projects/',data)
+  const response=await fetch('http://127.0.0.1:7002/projects/',data)
     .then((response)=> {
           if (!response.ok){
             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">

@@ -2,11 +2,14 @@ var week=localStorage.getItem('r_week')
 var month=localStorage.getItem('r_month')
 var year=localStorage.getItem('r_year')
 var emp_id=localStorage.getItem('emp_id')
+var user_name=localStorage.getItem('admin_name')
+if (user_name==null)
+{user_name="superuser"}
 var choice_data;
 
 var arr=[];
 document.getElementById('submit').addEventListener('click',update)
-document.getElementById('emp_name').innerHTML=localStorage.getItem('emp_name')
+document.getElementById('emp_name').innerHTML=localStorage.getItem('emp_name')+" - "+week
 
 async function getQuestions()
 { await getoptions()
@@ -120,7 +123,7 @@ async function update(){
                 "review":review,
                 "marks":mark,
                 "comment":comment ,
-                "reviewed_by":"nitesh"
+                "reviewed_by":user_name,
             }
             arr.push(arr_data)
         }) 

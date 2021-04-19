@@ -9,7 +9,6 @@ async function companydata(){
     
     const data= { method:'GET',
                     
-      
      
          headers:{
            'Content-Type':'application/json',
@@ -19,7 +18,7 @@ async function companydata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/company_register/',data)
+        const res= await  fetch('http://127.0.0.1:7002/company_register/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -64,7 +63,7 @@ async function otherdata(){
         
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/company_profile/',data)
+        const res= await  fetch('http://127.0.0.1:7002/company_profile/',data)
          .then((res)=> {
             console.log(res.statusText)
            if(res.statusText=="Forbidden")
@@ -76,11 +75,14 @@ async function otherdata(){
           }
            return res.json()
            }).then((data)=> {
+           
+             
             document.getElementById('address').innerHTML=data.address;
             document.getElementById('contact').innerHTML=data.contact_no;
             document.getElementById('ceo').innerHTML=data.ceo;
             document.getElementById('establish').innerHTML=data.established_year;
             document.getElementById('gst').innerHTML=data.gst_no;
+            document.getElementById('logo_image').src="http://127.0.0.1:7002"+data.company_logo
              
                console.log(data);
                

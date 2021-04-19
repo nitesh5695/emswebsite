@@ -4,6 +4,17 @@ try{
 catch (errr){
 	location.href="login.html"
 }
+if(localStorage.getItem('message')!=null)
+{
+  message=localStorage.getItem('message')
+ document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+ <strong>Success!</strong> ${message}
+</div>
+`
+ localStorage.removeItem('message')
+}
+ var company_id=localStorage.getItem('C_user')
+ console.log(company_id)
 var emp_data;
 var arr=[]
 document.getElementById('submit').addEventListener('click',submit_attendance)
@@ -21,7 +32,7 @@ async function employersdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/',data)
+        const res= await  fetch('http://127.0.0.1:7002/employer_register/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -82,10 +93,10 @@ async function employersdata(){
                    var value = checkbox[i].value;
                    var id=checkbox[i].name;
                    var data={
-                       "company_id":"1",
+                       "company_id":company_id,
                        "emp_id":id,
                        "status":value,
-                       "date":date
+                       "date":date,
                    }
                    
                
@@ -94,7 +105,7 @@ async function employersdata(){
            }
 
 
-
+           console.log(arr)
            const data1= { method:'POST',
                   
     
@@ -107,8 +118,9 @@ async function employersdata(){
              body:JSON.stringify(arr)
            }
          
-          fetch('https://smilebotems.herokuapp.com/attendance/',data1)
+         const res= fetch('http://127.0.0.1:7002/attendance/',data1)
            .then((response)=> {
+                
                  if (!response.ok){
                   document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
                   <strong>Failed!</strong> Any of the field is empty or wrong

@@ -32,7 +32,7 @@ async function employersleavedata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/leaves/',data)
+        const res= await  fetch('http://127.0.0.1:7002/leaves/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -114,7 +114,7 @@ async function employersleavedata(){
         body:JSON.stringify({status:status})
         }
       
-        fetch('https://smilebotems.herokuapp.com/leaves/'+leave_id+'/',data)
+        fetch('http://127.0.0.1:7002/leaves/'+leave_id+'/',data)
         .then((res)=> {
           console.log(res.statusText)
           if(res.statusText=="Forbidden")
@@ -168,7 +168,7 @@ async function employersleavedata(){
                
              }
            
-            const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/',data)
+            const res= await  fetch('http://127.0.0.1:7002/employer_register/',data)
              .then((res)=> {
                   
                console.log(res.statusText)

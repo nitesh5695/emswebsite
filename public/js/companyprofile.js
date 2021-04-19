@@ -5,6 +5,16 @@ try{
 catch (errr){
 	location.href="login.html";
 }
+if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+   document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+ }
+
 async function homedata(){
     
     const data= { method:'GET',
@@ -19,7 +29,7 @@ async function homedata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/company_register/',data)
+        const res= await  fetch('http://127.0.0.1:7002/company_register/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -56,19 +66,28 @@ async function postdata(){
     contact_no= document.getElementById('contact_no').value
     gst_no= document.getElementById('gst_no').value
 
+    const formdata=new FormData()
+    formdata.append('company_id',company_id)
+    formdata.append('ceo',ceo_name)
+    formdata.append('established_year',established_year)
+    formdata.append('address',address)
+    formdata.append('contact_no',contact_no)
+    formdata.append('gst_no',gst_no)
+    formdata.append('company_logo',logo.files[0])
+
     const data= { method:'POST',
                     
       
      
          headers:{
-           'Content-Type':'application/json',
+           
             Authorization: 'Bearer ' + localStorage.getItem("user_token")
            
          },
-         body:JSON.stringify({company_id:companyid,ceo:ceo_name,established_year:established_year,address:address,contact_no:contact_no,gst_no:gst_no})
+         body:formdata
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/company_profile/',data)
+        const res= await  fetch('http://127.0.0.1:7002/company_profile/',data)
          .then((res)=> {
 
             console.log(res)
@@ -77,12 +96,24 @@ async function postdata(){
             location.href='login.html'
            }
            if (!res.ok){
+            document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+            <strong>Failed!</strong> Any of the field is empty or wrong
+          </div>
+          `
             throw Error(res.statusText)
           }
            return res.json()
            }).then((data)=> {
-               document.getElementById('message').innerHTML=data.message;
-               console.log(data);
+            if (data.message!=undefined)
+            {
+           localStorage.setItem('message',data.message)
+           location.href='editcompanyprofile.html'
+            }else{
+             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
+             <strong>Failed!</strong> Any of the field is empty or wrong check filename
+           </div>
+           `
+            }
                
            }).catch((e)=>{
               {

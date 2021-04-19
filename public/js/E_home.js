@@ -8,6 +8,10 @@ try{
  }
 const user=localStorage.getItem('E_user')
 console.log(user)
+function preloader(){
+  preloader=document.getElementById('loading')
+  preloader.style.display='none';
+  }
 async function E_homedata(){
     
     const data= { method:'GET',
@@ -22,7 +26,7 @@ async function E_homedata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/employer_register/'+user+"/",data)
+        const res= await  fetch('http://127.0.0.1:7002/employer_register/'+user+"/",data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -62,7 +66,7 @@ async function E_homedata(){
                
              }
            
-            const res= await  fetch('https://smilebotems.herokuapp.com/company_register/',data)
+            const res= await  fetch('http://127.0.0.1:7002/company_register/',data)
              .then((res)=> {
                   
                console.log(res.statusText)

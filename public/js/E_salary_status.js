@@ -18,7 +18,7 @@ async function employer_all_salary(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/salary_detail/',data)
+        const res= await  fetch('http://127.0.0.1:7002/salary_detail/',data)
          .then((res)=> {
               
            console.log(res.statusText)

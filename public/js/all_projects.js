@@ -18,7 +18,7 @@ async function projectdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/projects/',data)
+        const res= await  fetch('http://127.0.0.1:7002/projects/',data)
          .then((res)=> {
               
            console.log(res.statusText)

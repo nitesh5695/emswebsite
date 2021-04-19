@@ -5,26 +5,31 @@
 	<meta name="author" content="Kodinger">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Login | EMS</title>
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+   <link href="back.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/my-login.css">
 </head>
 
-<body>
+<body class="my-login-page">
 
 
 
-	<div class="my-login-page">
-		<section class="h-100">
+	<div class="background" >
+	 <div class="cube"></div>
+       <div class="cube">Employee</div>
+       <div class="cube">salary</div>
+       <div class="cube">attendance</div>
+      <div class="cube">Analysis</div>
+		<section class="h-100" >
 		<div class="container h-100">
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper" style="margin-top: 100px;">
-					<div >
-						<h1>EMS</h1>
-					</div>
+					
 					<div class="card fat">
 						<center><h1 style="color:indianred; font-style:italic"><b>EMS</b></h1></center>
 						<div class="card-body">
-							<h4 class="card-title">Login</h4>
+							<h4 class="card-title">Employee Login</h4>
 							
 							<p id="message"></p>
 								
@@ -38,7 +43,7 @@
 
 								<div class="form-group">
 									<label for="password">Password
-										<a href="forgot-password.html" class="float-right">
+										<a href="E_forgot-password.html" class="float-right">
 											Forgot Password?
 										</a>
 									</label>
@@ -62,13 +67,16 @@
 									
 								</div>
 								<div class="mt-4 text-center">
-									Don't have an account? create your company <a href="register.html">Create One</a>
+									Don't have an account? create your company <a href="register.html">Create One</a> |
+									                                         <a href="admin_login.html">Admin Login</a>
 								</div>
 								
 							
 						</div>
 					</div>
-					
+						<div class="footer">
+						Copyright &copy; 2020 &mdash; EMS
+					    </div>
 				</div>
 			</div>
 		</div>
@@ -91,6 +99,16 @@
 	{
 		location.href="E_home.html"
 	}
+	if(localStorage.getItem('message')!=null)
+ {
+   message=localStorage.getItem('message')
+   document.getElementById('message').innerHTML=`<div class="alert alert-success my-4 " role="alert">
+  <strong>Success!</strong> ${message}
+</div>
+`
+localStorage.removeItem('message')
+localStorage.clear()
+ }
  async function login() {
 	 let email=document.getElementById('email').value
 	 let password=document.getElementById('password').value
@@ -105,7 +123,7 @@
 	   body:JSON.stringify({email:email,password:password})
 	 }
    
-	const res= await  fetch('https://smilebotems.herokuapp.com/gettoken/',data)
+	const res= await  fetch('http://127.0.0.1:7002/gettoken/',data)
 	 .then((res)=> {
 		  
 	   console.log(res.statusText)
@@ -123,17 +141,10 @@
 	  
 	   console.log(localStorage.getItem("user_token"))
 		   console.log(data);
-		   if(data.role=="company")
-		   {
-			localStorage.setItem("C_user",data.user);
-			window.location.href = "home.html";
-		   }
-		   else{
-			 console.log(data.user)  
 			localStorage.setItem("E_user",data.user);
 			window.location.href = "E_home.html";
 			
-		   }
+		   
 	  
 	   }).catch((e)=>{
 		  {

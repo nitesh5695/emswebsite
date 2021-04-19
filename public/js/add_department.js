@@ -4,6 +4,7 @@ try{
 catch (errr){
 	location.href="login.html"
 }
+var departments;
 if(localStorage.getItem('message')!=null)
  {
    message=localStorage.getItem('message')
@@ -23,7 +24,7 @@ async function getdata(){
         
       },
       }
-     const res= await  fetch('https://smilebotems.herokuapp.com/departments/',data)
+     const res= await  fetch('http://127.0.0.1:7002/departments/',data)
       .then((res)=> {
 
          console.log(res)
@@ -36,6 +37,7 @@ async function getdata(){
        }
         return res.json()
         }).then((data)=> {
+          departments=data
 
           var select=document.getElementById('department')
           data.forEach(element => {
@@ -74,11 +76,11 @@ async function add_department(){
       body:JSON.stringify({department_id:department_id})
     }
   
-  const response=await fetch('https://smilebotems.herokuapp.com/add_department/',data)
+  const response=await fetch('http://127.0.0.1:7002/add_department/',data)
     .then((response)=> {
           if (!response.ok){
             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">
-            <strong>Failed!</strong> Any of the field is empty or wrong
+            <strong>Failed!</strong> Already added this Department
           </div>
           `
         throw Error(res.statusText)
@@ -109,7 +111,7 @@ async function add_department(){
            
          },
          }
-        const res= await  fetch('https://smilebotems.herokuapp.com/add_department/',data)
+        const res= await  fetch('http://127.0.0.1:7002/add_department/',data)
          .then((res)=> {
    
             console.log(res)
@@ -128,12 +130,18 @@ async function add_department(){
              data.forEach(element => {
                  div.innerHTML+=` <tr>
                  <td>${element.id}</td>
-                 <td>${element.dept_id}</td>
+                 <td id="name${element.dept_id}">${element.dept_id}</td>
                  <td><button class="btn btn-danger" onclick="Delete(${element.id})">Delete</button>
                </tr>`    
              });
                console.log(data);
                
+           }).then((data)=>{
+             departments.forEach(elem=>{
+               document.getElementById("name"+elem.dept_id).innerHTML=elem.department_name
+
+             })
+
            }).catch((e)=>{
               {
                  console.log(e) 
@@ -152,7 +160,7 @@ const deldata= { method:'DELETE',
            
          },
          }
-        const res= fetch('https://smilebotems.herokuapp.com/add_department/'+id+'/',deldata)
+        const res= fetch('http://127.0.0.1:7002/add_department/'+id+'/',deldata)
          .then((res)=> {
            if (!res.ok){
             throw Error(res.statusText)
@@ -198,7 +206,7 @@ const deldata= { method:'DELETE',
       body:JSON.stringify({department_name:department_name})
     }
   
-  const response=await fetch('https://smilebotems.herokuapp.com/departments/',data)
+  const response=await fetch('http://127.0.0.1:7002/departments/',data)
     .then((response)=> {
           if (!response.ok){
             document.getElementById('message').innerHTML=`<div class="alert alert-danger my-4 " role="alert">

@@ -30,7 +30,7 @@ async function projectdata(){
            
          }
        
-        const res= await  fetch('https://smilebotems.herokuapp.com/projects/'+project_id+'/',data)
+        const res= await  fetch('http://127.0.0.1:7002/projects/'+project_id+'/',data)
          .then((res)=> {
               
            console.log(res.statusText)
@@ -83,7 +83,7 @@ async function update_project(){
         })
     }
   
-  const response=await fetch('https://smilebotems.herokuapp.com/projects/'+project_id+'/',data)
+  const response=await fetch('http://127.0.0.1:7002/projects/'+project_id+'/',data)
     .then((response)=> {
       
           if (!response.ok){

@@ -5,6 +5,9 @@ var emp_id=localStorage.getItem('emp_id')
 var phase_id=localStorage.getItem('phase_id')
 var question_id=localStorage.getItem('question_id')
 var review_id=localStorage.getItem('review_id')
+var user_name=localStorage.getItem('admin_name')
+if (user_name==null)
+{user_name="superuser"}
 var arr=[];
 var choice_data;
 var choice=[]
@@ -117,7 +120,7 @@ getQuestions()
             "review": review,
             "comment": comment,
             "marks": mark,
-            "reviewed_by": "nitesh",
+            "reviewed_by": user_name,
            
            })
          }

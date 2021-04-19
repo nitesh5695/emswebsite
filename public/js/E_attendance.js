@@ -13,7 +13,7 @@ async function my_attendance(){
            
          },
          }
-        const res= await  fetch('https://smilebotems.herokuapp.com/my_attendance/',data)
+        const res= await  fetch('http://127.0.0.1:7002/my_attendance/',data)
          .then((res)=> {
    
             console.log(res)
